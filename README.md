@@ -24,13 +24,13 @@ This case study is part of the Google Data Analytics Professional Certificate. I
 * [Conclusion](https://github.com/ThuHangTranova/Bellabeat_Case_Study/blob/main/Bellabeat-Case-Study.md#conclusion)
 
 ## Dataset
-For this case study, the [FitBit Fitness Tracker Data](https://www.kaggle.com/arashnic/fitbit) was be used. The dataset is publicly available on Kaggle. 
+The [FitBit Fitness Tracker Data](https://www.kaggle.com/arashnic/fitbit) was be used for this study. The dataset is publicly available on Kaggle. 
 
 ## Full Version
-For access to the complete version of the [Bellabeat Case Study](https://github.com/ThuHangTranova/Bellabeat_Case_Study/blob/main/Bellabeat-Case-Study.md#section-four), please click on the provided links or access it by clicking on the file 'Bellabeat-Case-Study.md' in the 'Bellabeat_Case_Study' repository.
+For access to the complete version of the [Bellabeat Case Study](https://github.com/ThuHangTranova/Bellabeat_Case_Study/blob/main/Bellabeat-Case-Study.md#section-four), please follow the provided links or navigate to the file 'Bellabeat-Case-Study.md' in the 'Bellabeat_Case_Study' repository.
 
 ## Other Mediums
-The case study can also be accessed via:
+The case study is also accessible via:
 <br/>
 [Website: Bellabeat Case Study](https://thuhangtranova.wixsite.com/thuhang-tranova/post/bellabeat-case-study)
 <br/>
