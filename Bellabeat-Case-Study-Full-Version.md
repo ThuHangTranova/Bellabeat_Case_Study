@@ -1,4 +1,4 @@
-# **Bellabeat Case Stuty**
+# **Bellabeat Case Study**
 
 **Author:** Thu Hang Tranova
 <br/>
