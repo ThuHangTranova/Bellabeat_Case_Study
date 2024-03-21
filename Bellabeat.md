@@ -1078,3 +1078,1357 @@ sum(duplicated(clean_daily_sleep))
 [1] "Daily Sleep"
 3
 ```
+***Hourly DataFrames***
+```r
+# Checking for duplicates: Hourly DataFrames
+print("Hourly Calories")
+sum(duplicated(clean_hourly_calories))
+
+print("Hourly Intensities")
+sum(duplicated(clean_hourly_intensities))
+
+print("Hourly Steps")
+sum(duplicated(clean_hourly_steps))
+```
+```{r, results='markup'}
+[1] "Hourly Calories"
+0
+[1] "Hourly Intensities"
+0
+[1] "Hourly Steps"
+0
+```
+***Minute DataFrames***
+```r
+# Checking for duplicates: Minute DataFrames
+print("Minute Calories")
+sum(duplicated(clean_minute_calories))
+
+print("Minute Intensities")
+sum(duplicated(clean_minute_intensities))
+
+print("Minute METs")
+sum(duplicated(clean_minute_METs))
+
+print("Minute Sleep")
+sum(duplicated(clean_minute_sleep))
+
+print("Minute Steps")
+sum(duplicated(clean_minute_steps))
+```
+```{r, results='markup'}
+[1] "Minute Calories"
+0
+[1] "Minute Intensities"
+0
+[1] "Minute METs"
+0
+[1] "Minute Sleep"
+543
+[1] "Minute Steps"
+0
+```
+#### Observation
+Duplicates have been identified in the "daily_sleep" and "minute_sleep" dataframes.
+
+#### Actions Taken
+To remove these duplicates, the `!duplicated()` function will be used. 
+```r
+# Removing duplicates from the "Daily Sleep" DataFrame
+clean_daily_sleep <- clean_daily_sleep[!duplicated(clean_daily_sleep),]
+# Checking if the duplicates are removed from the "Daily Sleep" DataFrame
+print("Daily Sleep clean of duplicates")
+sum(duplicated(clean_daily_sleep))
+
+# Removing duplicates from the "Minute Sleep" DataFrame
+clean_minute_sleep <- clean_minute_sleep[!duplicated(clean_minute_sleep),]
+# Checking if the duplicates are removed from the "Minute Sleep" DataFrame
+print("Minute Sleep clean of duplicates")
+sum(duplicated(clean_minute_sleep))
+```
+```{r, results='markup'}
+[1] "Daily Sleep clean of duplicates"
+0
+[1] "Minute Sleep clean of duplicates"
+0
+```
+<a id="adding-weekday-column"></a>
+## 3.5 Adding 'weekday' Column
+In order to facilitate analysis regarding participant activity levels on specific days, a "weekday" column will be incorporated into all Daily DataFrames and some Hourly DataFrames.
+```r
+# Adding the "weekday" column
+clean_daily_activity$weekday <- weekdays(as.Date(clean_daily_activity$activity_date_ymd))
+print("Daily Activity")
+glimpse(clean_daily_activity)
+
+clean_daily_calories$weekday <- weekdays(as.Date(clean_daily_calories$activity_date_ymd))
+print("Daily Calories")
+glimpse(clean_daily_calories)
+
+clean_daily_intensities$weekday <- weekdays(as.Date(clean_daily_intensities$activity_date_ymd))
+print("Daily Intensities")
+glimpse(clean_daily_intensities)
+
+clean_daily_steps$weekday <- weekdays(as.Date(clean_daily_steps$activity_date_ymd))
+print("Daily Steps")
+glimpse(clean_daily_steps)
+
+clean_daily_sleep$weekday <- weekdays(as.Date(clean_daily_sleep$activity_date_ymd))
+print("Daily Sleep")
+glimpse(clean_daily_sleep)
+
+clean_hourly_intensities$weekday <- weekdays(as.Date(clean_hourly_intensities$activity_hour_ymdhms))
+print("Daily Sleep")
+glimpse(clean_hourly_intensities)
+```
+```{r, results='markup'}
+[1] "Daily Activity"
+Rows: 940
+Columns: 17
+$ id                         <dbl> 1503960366, 1503960366, 1503960366, 1503960…
+$ activity_date              <chr> "4/12/2016", "4/13/2016", "4/14/2016", "4/1…
+$ total_steps                <dbl> 13162, 10735, 10460, 9762, 12669, 9705, 130…
+$ total_distance             <dbl> 8.50, 6.97, 6.74, 6.28, 8.16, 6.48, 8.59, 9…
+$ tracker_distance           <dbl> 8.50, 6.97, 6.74, 6.28, 8.16, 6.48, 8.59, 9…
+$ logged_activities_distance <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+$ very_active_distance       <dbl> 1.88, 1.57, 2.44, 2.14, 2.71, 3.19, 3.25, 3…
+$ moderately_active_distance <dbl> 0.55, 0.69, 0.40, 1.26, 0.41, 0.78, 0.64, 1…
+$ light_active_distance      <dbl> 6.06, 4.71, 3.91, 2.83, 5.04, 2.51, 4.71, 5…
+$ sedentary_active_distance  <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+$ very_active_minutes        <dbl> 25, 21, 30, 29, 36, 38, 42, 50, 28, 19, 66,…
+$ fairly_active_minutes      <dbl> 13, 19, 11, 34, 10, 20, 16, 31, 12, 8, 27, …
+$ lightly_active_minutes     <dbl> 328, 217, 181, 209, 221, 164, 233, 264, 205…
+$ sedentary_minutes          <dbl> 728, 776, 1218, 726, 773, 539, 1149, 775, 8…
+$ calories                   <dbl> 1985, 1797, 1776, 1745, 1863, 1728, 1921, 2…
+$ activity_date_ymd          <date> 2016-04-12, 2016-04-13, 2016-04-14, 2016-0…
+$ weekday                    <chr> "Tuesday", "Wednesday", "Thursday", "Friday…
+[1] "Daily Calories"
+Rows: 940
+Columns: 5
+$ id                <dbl> 1503960366, 1503960366, 1503960366, 1503960366, 1503…
+$ activity_date     <chr> "4/12/2016", "4/13/2016", "4/14/2016", "4/15/2016", …
+$ calories          <dbl> 1985, 1797, 1776, 1745, 1863, 1728, 1921, 2035, 1786…
+$ activity_date_ymd <date> 2016-04-12, 2016-04-13, 2016-04-14, 2016-04-15, 201…
+$ weekday           <chr> "Tuesday", "Wednesday", "Thursday", "Friday", "Satur…
+[1] "Daily Intensities"
+Rows: 940
+Columns: 12
+$ id                         <dbl> 1503960366, 1503960366, 1503960366, 1503960…
+$ activity_date              <chr> "4/12/2016", "4/13/2016", "4/14/2016", "4/1…
+$ sedentary_minutes          <dbl> 728, 776, 1218, 726, 773, 539, 1149, 775, 8…
+$ lightly_active_minutes     <dbl> 328, 217, 181, 209, 221, 164, 233, 264, 205…
+$ fairly_active_minutes      <dbl> 13, 19, 11, 34, 10, 20, 16, 31, 12, 8, 27, …
+$ very_active_minutes        <dbl> 25, 21, 30, 29, 36, 38, 42, 50, 28, 19, 66,…
+$ sedentary_active_distance  <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+$ light_active_distance      <dbl> 6.06, 4.71, 3.91, 2.83, 5.04, 2.51, 4.71, 5…
+$ moderately_active_distance <dbl> 0.55, 0.69, 0.40, 1.26, 0.41, 0.78, 0.64, 1…
+$ very_active_distance       <dbl> 1.88, 1.57, 2.44, 2.14, 2.71, 3.19, 3.25, 3…
+$ activity_date_ymd          <date> 2016-04-12, 2016-04-13, 2016-04-14, 2016-0…
+$ weekday                    <chr> "Tuesday", "Wednesday", "Thursday", "Friday…
+[1] "Daily Steps"
+Rows: 940
+Columns: 5
+$ id                <dbl> 1503960366, 1503960366, 1503960366, 1503960366, 1503…
+$ activity_date     <chr> "4/12/2016", "4/13/2016", "4/14/2016", "4/15/2016", …
+$ total_steps       <dbl> 13162, 10735, 10460, 9762, 12669, 9705, 13019, 15506…
+$ activity_date_ymd <date> 2016-04-12, 2016-04-13, 2016-04-14, 2016-04-15, 201…
+$ weekday           <chr> "Tuesday", "Wednesday", "Thursday", "Friday", "Satur…
+[1] "Daily Sleep"
+Rows: 410
+Columns: 7
+$ id                   <dbl> 1503960366, 1503960366, 1503960366, 1503960366, 1…
+$ activity_date        <chr> "4/12/2016 12:00:00 AM", "4/13/2016 12:00:00 AM",…
+$ total_sleep_records  <dbl> 1, 2, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
+$ total_minutes_asleep <dbl> 327, 384, 412, 340, 700, 304, 360, 325, 361, 430,…
+$ total_time_in_bed    <dbl> 346, 407, 442, 367, 712, 320, 377, 364, 384, 449,…
+$ activity_date_ymd    <dttm> 2016-04-12, 2016-04-13, 2016-04-15, 2016-04-16, …
+$ weekday              <chr> "Tuesday", "Wednesday", "Friday", "Saturday", "Su…
+[1] "Daily Sleep"
+Rows: 22,099
+Columns: 6
+$ id                   <dbl> 1503960366, 1503960366, 1503960366, 1503960366, 1…
+$ activity_hour        <chr> "4/12/2016 12:00:00 AM", "4/12/2016 1:00:00 AM", …
+$ total_intensity      <dbl> 20, 8, 7, 0, 0, 0, 0, 0, 13, 30, 29, 12, 11, 6, 3…
+$ average_intensity    <dbl> 0.333333, 0.133333, 0.116667, 0.000000, 0.000000,…
+$ activity_hour_ymdhms <dttm> 2016-04-12 00:00:00, 2016-04-12 01:00:00, 2016-0…
+$ weekday              <chr> "Tuesday", "Tuesday", "Tuesday", "Tuesday", "Tues…
+```
+<a id="merging-datasets"></a>
+## 3.6 Merging Datasets
+Upon examination, it was noted that the `daily_activity` dataframe contains the same variables and attributes present in the `daily_calories`, `daily_intensities`, and `daily_steps` dataframes. However, to make sure that those variables are identical, the `all.equal()` function will be used. Identical columns will be checked in all dataframes to identify if any of them can be merged.
+
+***Daily DataFrames***
+```r
+# Checking if columns are identical: Daily DataFrames
+print("-----Daily Activity, Daily Calories-----")
+if (all.equal(clean_daily_activity$id, clean_daily_calories$id) !=0) {
+  print("Id: identical")
+}
+if (all.equal(clean_daily_activity$activity_date, clean_daily_calories$activity_date) !=0) {
+  print("Activity Date: identical")
+}
+if (all.equal(clean_daily_activity$calories, clean_daily_calories$calories) !=0) {
+  print("Calories: identical")
+}
+if (all.equal(clean_daily_activity$weekday, clean_daily_calories$weekday) !=0) {
+  print("Weekday: identical")
+}
+
+print("-----Daily Activity, Daily Intensities-----")
+if (all.equal(clean_daily_activity$id, clean_daily_intensities$id) !=0) {
+  print("Id: identical")
+}
+if (all.equal(clean_daily_activity$activity_date, clean_daily_intensities$activity_date) !=0) {
+  print("Activity Date: identical")
+}
+if (all.equal(clean_daily_activity$sedentary_minutes, clean_daily_intensities$sedentary_minutes) !=0) {
+  print("Sedentary Minutes: identical")
+}
+if (all.equal(clean_daily_activity$lightly_active_minutes, clean_daily_intensities$lightly_active_minutes) !=0) {
+  print("Lightly Active Minutes: identical")
+}
+if (all.equal(clean_daily_activity$fairly_active_minutes, clean_daily_intensities$fairly_active_minutes) !=0) {
+  print("Fairly Active Minutes: identical")
+}
+if (all.equal(clean_daily_activity$very_active_minutes, clean_daily_intensities$very_active_minutes) !=0) {
+  print("Very Active Minutes: identical")
+}
+if (all.equal(clean_daily_activity$sedentary_active_distance, clean_daily_intensities$sedentary_active_distance) !=0) {
+  print("Sedentary Active Distance: identical")
+}
+if (all.equal(clean_daily_activity$light_active_distance, clean_daily_intensities$light_active_distance) !=0) {
+  print("Light Active Distance: identical")
+}
+if (all.equal(clean_daily_activity$moderately_active_distance, clean_daily_intensities$moderately_active_distance) !=0) {
+  print("Moderately Active Distance: identical")
+}
+if (all.equal(clean_daily_activity$very_active_distance, clean_daily_intensities$very_active_distance) !=0) {
+  print("Very Active Distance: identical")
+}
+if (all.equal(clean_daily_activity$weekday, clean_daily_intensities$weekday) !=0) {
+  print("Weekday: identical")
+}
+
+
+print("-----Daily Activity, Daily Steps-----")
+if (all.equal(clean_daily_activity$id, clean_daily_steps$id) !=0) {
+  print("Id: identical")
+}
+if (all.equal(clean_daily_activity$activity_date, clean_daily_steps$activity_date) !=0) {
+  print("Activity Date: identical")
+}
+if (all.equal(clean_daily_activity$total_steps, clean_daily_steps$total_steps) !=0) {
+  print("Total Steps: identical")
+}
+if (all.equal(clean_daily_activity$weekday, clean_daily_steps$weekday) !=0) {
+  print("Weekday: identical")
+}
+```
+```{r, results='markup'}
+[1] "-----Daily Activity, Daily Calories-----"
+[1] "Id: identical"
+[1] "Activity Date: identical"
+[1] "Calories: identical"
+[1] "Weekday: identical"
+[1] "-----Daily Activity, Daily Intensities-----"
+[1] "Id: identical"
+[1] "Activity Date: identical"
+[1] "Sedentary Minutes: identical"
+[1] "Lightly Active Minutes: identical"
+[1] "Fairly Active Minutes: identical"
+[1] "Very Active Minutes: identical"
+[1] "Sedentary Active Distance: identical"
+[1] "Light Active Distance: identical"
+[1] "Moderately Active Distance: identical"
+[1] "Very Active Distance: identical"
+[1] "Weekday: identical"
+[1] "-----Daily Activity, Daily Steps-----"
+[1] "Id: identical"
+[1] "Activity Date: identical"
+[1] "Total Steps: identical"
+[1] "Weekday: identical"
+```
+***Hourly DataFrames***
+```r
+# Checking if columns are identical: Hourly DataFrames
+print("-----Hourly Calories, Hourly Intensities-----")
+if (all.equal(clean_hourly_calories$id, clean_hourly_intensities$id) !=0) {
+  print("Id: identical")
+}
+if (all.equal(clean_hourly_calories$activity_hour, clean_hourly_intensities$activity_hour) !=0) {
+  print("Activity Hour: identical")
+}
+
+print("-----Hourly Calories, Hourly Steps-----")
+if (all.equal(clean_hourly_calories$id, clean_hourly_steps$id) !=0) {
+  print("Id: identical")
+}
+if (all.equal(clean_hourly_calories$activity_hour, clean_hourly_steps$activity_hour) !=0) {
+  print("Activity Hour: identical")
+}
+```
+```{r, results='markup'}
+[1] "-----Hourly Calories, Hourly Intensities-----"
+[1] "Id: identical"
+[1] "Activity Hour: identical"
+[1] "-----Hourly Calories, Hourly Steps-----"
+[1] "Id: identical"
+[1] "Activity Hour: identical"
+```
+***Minute DataFrames***
+```r
+# Checking if columns are identical: Minute DataFrames
+print("-----Minute Calories, Minute Intensities-----")
+if (all.equal(clean_minute_calories$id, clean_minute_intensities$id) !=0) {
+  print("Id: identical")
+}
+if (all.equal(clean_minute_calories$activity_minute, clean_minute_intensities$activity_minute) !=0) {
+  print("Activity Minute: identical")
+}
+
+print("-----Minute Calories, Minute METs-----")
+if (all.equal(clean_minute_calories$id, clean_minute_METs$id) !=0) {
+  print("Id: identical")
+}
+if (all.equal(clean_minute_calories$activity_minute, clean_minute_METs$activity_minute) !=0) {
+  print("Activity Minute: identical")
+}
+
+print("-----Minute Calories, Minute Sleep-----")
+if (all.equal(clean_minute_calories$id, clean_minute_sleep$id) !=0) {
+  print("Id: identical")
+}
+if (all.equal(clean_minute_sleep$activity_minute, clean_minute_sleep$activity_minute) !=0) {
+  print("Activity Minute: identical")
+}
+
+print("-----Minute Calories, Minute Steps-----")
+if (all.equal(clean_minute_calories$id, clean_minute_steps$id) !=0) {
+  print("Id: identical")
+}
+if (all.equal(clean_minute_steps$activity_minute, clean_minute_steps$activity_minute) !=0) {
+  print("Activity Minute: identical")
+}
+```
+```{r, results='markup'}
+[1] "-----Minute Calories, Minute Intensities-----"
+[1] "Id: identical"
+[1] "Activity Minute: identical"
+[1] "-----Minute Calories, Minute METs-----"
+[1] "Id: identical"
+[1] "Activity Minute: identical"
+[1] "-----Minute Calories, Minute Sleep-----"
+[1] "Id: identical"
+[1] "Activity Minute: identical"
+[1] "-----Minute Calories, Minute Steps-----"
+[1] "Id: identical"
+[1] "Activity Minute: identical"
+```
+#### Actions Taken
+In terms of Daily DataFrames, because data in `daily_calories`, `daily_intensities`, and `daily_steps` is already aggregated within the `daily_activity` dataframe, only the `daily_activity` and `daily_sleep` dataframes will be merged. With regard to Hourly DataFrames, all of them will be merged into one big dataframe. The same will be done with the Minute DataFrames.
+
+***Daily DataFrames***
+```r
+# Merging data: Daily DataFrames
+daily_activity_merged <- merge(clean_daily_activity, clean_daily_sleep, by=c("id", "activity_date_ymd", "weekday"), all = TRUE, no.dups = TRUE)
+glimpse(daily_activity_merged)
+```
+```{r, results='markup'}
+Rows: 940
+Columns: 21
+$ id                         <dbl> 1503960366, 1503960366, 1503960366, 1503960…
+$ activity_date_ymd          <date> 2016-04-12, 2016-04-13, 2016-04-14, 2016-0…
+$ weekday                    <chr> "Tuesday", "Wednesday", "Thursday", "Friday…
+$ activity_date.x            <chr> "4/12/2016", "4/13/2016", "4/14/2016", "4/1…
+$ total_steps                <dbl> 13162, 10735, 10460, 9762, 12669, 9705, 130…
+$ total_distance             <dbl> 8.50, 6.97, 6.74, 6.28, 8.16, 6.48, 8.59, 9…
+$ tracker_distance           <dbl> 8.50, 6.97, 6.74, 6.28, 8.16, 6.48, 8.59, 9…
+$ logged_activities_distance <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+$ very_active_distance       <dbl> 1.88, 1.57, 2.44, 2.14, 2.71, 3.19, 3.25, 3…
+$ moderately_active_distance <dbl> 0.55, 0.69, 0.40, 1.26, 0.41, 0.78, 0.64, 1…
+$ light_active_distance      <dbl> 6.06, 4.71, 3.91, 2.83, 5.04, 2.51, 4.71, 5…
+$ sedentary_active_distance  <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+$ very_active_minutes        <dbl> 25, 21, 30, 29, 36, 38, 42, 50, 28, 19, 66,…
+$ fairly_active_minutes      <dbl> 13, 19, 11, 34, 10, 20, 16, 31, 12, 8, 27, …
+$ lightly_active_minutes     <dbl> 328, 217, 181, 209, 221, 164, 233, 264, 205…
+$ sedentary_minutes          <dbl> 728, 776, 1218, 726, 773, 539, 1149, 775, 8…
+$ calories                   <dbl> 1985, 1797, 1776, 1745, 1863, 1728, 1921, 2…
+$ activity_date.y            <chr> "4/12/2016 12:00:00 AM", "4/13/2016 12:00:0…
+$ total_sleep_records        <dbl> 1, 2, NA, 1, 2, 1, NA, 1, 1, 1, NA, 1, 1, 1…
+$ total_minutes_asleep       <dbl> 327, 384, NA, 412, 340, 700, NA, 304, 360, …
+$ total_time_in_bed          <dbl> 346, 407, NA, 442, 367, 712, NA, 320, 377, …
+```
+***Hourly DataFrames***
+```r
+# Merging data: Hourly DataFrames
+hourly_activity_m <- merge(clean_hourly_calories, clean_hourly_intensities, by=c("id", "activity_hour", "activity_hour_ymdhms"), all = TRUE, no.dups = TRUE)
+hourly_activity_merged <- merge(hourly_activity_m, clean_hourly_steps, by=c("id", "activity_hour", "activity_hour_ymdhms"), all = TRUE, no.dups = TRUE)
+glimpse(hourly_activity_merged)
+```
+```{r, results='markup'}
+Rows: 22,099
+Columns: 8
+$ id                   <dbl> 1503960366, 1503960366, 1503960366, 1503960366, 1…
+$ activity_hour        <chr> "4/12/2016 1:00:00 AM", "4/12/2016 1:00:00 PM", "…
+$ activity_hour_ymdhms <dttm> 2016-04-12 01:00:00, 2016-04-12 13:00:00, 2016-0…
+$ calories             <dbl> 61, 66, 99, 65, 76, 81, 81, 73, 59, 110, 47, 151,…
+$ total_intensity      <dbl> 8, 6, 29, 9, 12, 21, 20, 11, 7, 36, 0, 58, 0, 13,…
+$ average_intensity    <dbl> 0.133333, 0.100000, 0.483333, 0.150000, 0.200000,…
+$ weekday              <chr> "Tuesday", "Tuesday", "Tuesday", "Tuesday", "Tues…
+$ total_steps          <dbl> 160, 221, 676, 89, 360, 338, 373, 253, 151, 1166,…
+```
+***Minute DataFrames***
+```r
+# Merging data: Minute DataFrames
+minute_activity_m <- merge(clean_minute_calories,clean_minute_intensities, by=c("id", "activity_minute", "activity_minute_ymdhms"), all = TRUE, no.dups = TRUE)
+minute_activity_m1 <- merge(minute_activity_m, clean_minute_METs, by=c("id", "activity_minute", "activity_minute_ymdhms"), all = TRUE, no.dups = TRUE)
+minute_activity_m2 <- merge(minute_activity_m1, clean_minute_sleep, by=c("id", "activity_minute", "activity_minute_ymdhms"), all = TRUE, no.dups = TRUE)
+minute_activity_merged <- merge(minute_activity_m2, clean_minute_steps, by=c("id", "activity_minute", "activity_minute_ymdhms"), all = TRUE, no.dups = TRUE)
+glimpse(minute_activity_merged)
+```
+```{r, results='markup'}
+Rows: 1,388,198
+Columns: 9
+$ id                     <dbl> 1503960366, 1503960366, 1503960366, 1503960366,…
+$ activity_minute        <chr> "4/12/2016 1:00:00 AM", "4/12/2016 1:00:00 PM",…
+$ activity_minute_ymdhms <dttm> 2016-04-12 01:00:00, 2016-04-12 13:00:00, 2016…
+$ calories               <dbl> 0.9438, 0.9438, 2.6741, 0.9438, 2.0449, 0.9438,…
+$ intensity              <dbl> 0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0,…
+$ mets                   <dbl> 12, 12, 34, 12, 26, 12, 34, 30, 30, 26, 12, 12,…
+$ sleep_state            <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
+$ log_id                 <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
+$ total_steps            <dbl> 0, 0, 36, 0, 9, 0, 34, 21, 23, 9, 0, 0, 0, 0, 0…
+```
+Merging datasets will be helpful later during the analysis and visualisation sections.
+<br>
+<br>
+<a id="summary-of-the-datasets"></a>
+## 3.7 Summary of the Datasets
+Summarising all the datasets will provide an overview and reveal any other errors or outliers that were missed in the previous sections.
+
+***Daily DataFrames***
+```r
+# Summary of Daily DataFrames
+print("-----Daily Calories-----")
+clean_daily_calories %>% 
+  select(calories) %>% 
+  summary()
+
+print("-----Daily Intensities-----")
+clean_daily_intensities %>% 
+  select(sedentary_minutes, lightly_active_minutes, fairly_active_minutes, very_active_minutes) %>% 
+  summary()
+  
+clean_daily_intensities %>% 
+  select(sedentary_active_distance) %>% 
+  summary()
+
+print("-----Daily Steps-----")
+clean_daily_steps %>% 
+  select(total_steps) %>% 
+  summary()
+
+print("-----Daily Sleep-----")
+clean_daily_sleep %>% 
+  select(total_sleep_records, total_minutes_asleep, total_time_in_bed) %>% 
+  summary()
+```
+```{r, results='markup'}
+[1] "-----Daily Calories-----"
+    calories   
+ Min.   :   0  
+ 1st Qu.:1828  
+ Median :2134  
+ Mean   :2304  
+ 3rd Qu.:2793  
+ Max.   :4900  
+[1] "-----Daily Intensities-----"
+ sedentary_minutes lightly_active_minutes fairly_active_minutes
+ Min.   :   0.0    Min.   :  0.0          Min.   :  0.00       
+ 1st Qu.: 729.8    1st Qu.:127.0          1st Qu.:  0.00       
+ Median :1057.5    Median :199.0          Median :  6.00       
+ Mean   : 991.2    Mean   :192.8          Mean   : 13.56       
+ 3rd Qu.:1229.5    3rd Qu.:264.0          3rd Qu.: 19.00       
+ Max.   :1440.0    Max.   :518.0          Max.   :143.00       
+ very_active_minutes
+ Min.   :  0.00     
+ 1st Qu.:  0.00     
+ Median :  4.00     
+ Mean   : 21.16     
+ 3rd Qu.: 32.00     
+ Max.   :210.00     
+ sedentary_active_distance
+ Min.   :0.000000         
+ 1st Qu.:0.000000         
+ Median :0.000000         
+ Mean   :0.001606         
+ 3rd Qu.:0.000000         
+ Max.   :0.110000         
+[1] "-----Daily Steps-----"
+  total_steps   
+ Min.   :    0  
+ 1st Qu.: 3790  
+ Median : 7406  
+ Mean   : 7638  
+ 3rd Qu.:10727  
+ Max.   :36019  
+[1] "-----Daily Sleep-----"
+ total_sleep_records total_minutes_asleep total_time_in_bed
+ Min.   :1.00        Min.   : 58.0        Min.   : 61.0    
+ 1st Qu.:1.00        1st Qu.:361.0        1st Qu.:403.8    
+ Median :1.00        Median :432.5        Median :463.0    
+ Mean   :1.12        Mean   :419.2        Mean   :458.5    
+ 3rd Qu.:1.00        3rd Qu.:490.0        3rd Qu.:526.0    
+ Max.   :3.00        Max.   :796.0        Max.   :961.0    
+```
+***Hourly DataFrames***
+```r
+# Summary of Hourly DataFrames
+print("-----Hourly Calories-----")
+hourly_activity_merged %>% 
+  select(calories) %>% 
+  drop_na() %>% 
+  summary()
+
+print("-----Hourly Intensities-----")
+hourly_activity_merged %>% 
+  select(total_intensity, average_intensity) %>% 
+  drop_na() %>% 
+  summary()
+
+print("-----Hourly Steps-----")
+hourly_activity_merged %>% 
+  select(total_steps) %>% 
+  drop_na() %>% 
+  summary()
+```
+```{r, results='markup'}
+[1] "-----Hourly Calories-----"
+    calories     
+ Min.   : 42.00  
+ 1st Qu.: 63.00  
+ Median : 83.00  
+ Mean   : 97.39  
+ 3rd Qu.:108.00  
+ Max.   :948.00  
+[1] "-----Hourly Intensities-----"
+ total_intensity  average_intensity
+ Min.   :  0.00   Min.   :0.0000   
+ 1st Qu.:  0.00   1st Qu.:0.0000   
+ Median :  3.00   Median :0.0500   
+ Mean   : 12.04   Mean   :0.2006   
+ 3rd Qu.: 16.00   3rd Qu.:0.2667   
+ Max.   :180.00   Max.   :3.0000   
+[1] "-----Hourly Steps-----"
+  total_steps     
+ Min.   :    0.0  
+ 1st Qu.:    0.0  
+ Median :   40.0  
+ Mean   :  320.2  
+ 3rd Qu.:  357.0  
+ Max.   :10554.0  
+```
+***Minute DataFrames***
+```r
+# Summary of Minute DataFrames
+print("-----Minute Calories-----")
+minute_activity_merged %>% 
+  select(calories) %>% 
+  drop_na() %>% 
+  summary()
+
+print("-----Minute Intensities-----")
+minute_activity_merged %>% 
+  select(intensity, mets, sleep_state) %>% 
+  drop_na() %>% 
+  summary()
+
+print("-----Minute Steps-----")
+minute_activity_merged %>% 
+  select(total_steps) %>% 
+  drop_na() %>% 
+  summary()
+```
+```{r, results='markup'}
+[1] "-----Minute Calories-----"
+    calories      
+ Min.   : 0.0000  
+ 1st Qu.: 0.9357  
+ Median : 1.2176  
+ Mean   : 1.6231  
+ 3rd Qu.: 1.4327  
+ Max.   :19.7499  
+[1] "-----Minute Intensities-----"
+   intensity            mets        sleep_state 
+ Min.   :0.00000   Min.   : 0.00   Min.   :1.0  
+ 1st Qu.:0.00000   1st Qu.:10.00   1st Qu.:1.0  
+ Median :0.00000   Median :10.00   Median :1.0  
+ Mean   :0.01395   Mean   :10.34   Mean   :1.1  
+ 3rd Qu.:0.00000   3rd Qu.:10.00   3rd Qu.:1.0  
+ Max.   :3.00000   Max.   :90.00   Max.   :3.0  
+[1] "-----Minute Steps-----"
+  total_steps     
+ Min.   :  0.000  
+ 1st Qu.:  0.000  
+ Median :  0.000  
+ Mean   :  5.336  
+ 3rd Qu.:  0.000  
+ Max.   :220.000  
+```
+### 3.7.1 Removing 0 Total Steps and 1,440 Sedentary Minutes
+The `clean_daily_steps` summary has revealed that there were 0 steps taken throughout a day. Furthermore, in the `clean_daily_intensities` dataframe, 1,440 minutes (equivalent to 24 hours) of sedentary time was recorded. This might suggest that some participants may have activated the device but not worn it. This idea is further investigated by comparing the `sedentary_minute` and `total_steps` columns.
+```r
+# Comparing the total_steps and sedentary_minutes
+daily_activity_merged %>% 
+  group_by(id) %>% 
+  filter(sedentary_minutes == 1440 & total_steps == 0) %>% 
+  select(activity_date_ymd, sedentary_minutes, total_steps) %>% 
+  print(n=100)
+```
+```{r, results='markup'}
+# A tibble: 72 × 4
+# Groups:   id [15]
+           id activity_date_ymd sedentary_minutes total_steps
+        <dbl> <date>                        <dbl>       <dbl>
+ 1 1503960366 2016-05-12                     1440           0
+ 2 1844505072 2016-04-24                     1440           0
+ 3 1844505072 2016-04-25                     1440           0
+ 4 1844505072 2016-04-26                     1440           0
+ 5 1844505072 2016-05-02                     1440           0
+ 6 1844505072 2016-05-07                     1440           0
+ 7 1844505072 2016-05-08                     1440           0
+ 8 1844505072 2016-05-09                     1440           0
+ 9 1844505072 2016-05-10                     1440           0
+10 1844505072 2016-05-11                     1440           0
+11 1927972279 2016-04-16                     1440           0
+12 1927972279 2016-04-17                     1440           0
+13 1927972279 2016-04-19                     1440           0
+14 1927972279 2016-04-20                     1440           0
+15 1927972279 2016-04-21                     1440           0
+16 1927972279 2016-04-27                     1440           0
+17 1927972279 2016-04-29                     1440           0
+18 1927972279 2016-04-30                     1440           0
+19 1927972279 2016-05-05                     1440           0
+20 1927972279 2016-05-08                     1440           0
+21 1927972279 2016-05-09                     1440           0
+22 1927972279 2016-05-10                     1440           0
+23 1927972279 2016-05-11                     1440           0
+24 4020332650 2016-04-13                     1440           0
+25 4020332650 2016-04-19                     1440           0
+26 4020332650 2016-04-20                     1440           0
+27 4020332650 2016-04-21                     1440           0
+28 4020332650 2016-04-22                     1440           0
+29 4020332650 2016-04-23                     1440           0
+30 4020332650 2016-04-24                     1440           0
+31 4020332650 2016-04-25                     1440           0
+32 4020332650 2016-04-26                     1440           0
+33 4020332650 2016-04-27                     1440           0
+34 4020332650 2016-04-28                     1440           0
+35 4020332650 2016-04-29                     1440           0
+36 4020332650 2016-04-30                     1440           0
+37 4020332650 2016-05-01                     1440           0
+38 4057192912 2016-04-14                     1440           0
+39 4702921684 2016-05-01                     1440           0
+40 5577150313 2016-05-07                     1440           0
+41 5577150313 2016-05-08                     1440           0
+42 6117666160 2016-04-12                     1440           0
+43 6117666160 2016-04-13                     1440           0
+44 6117666160 2016-04-14                     1440           0
+45 6117666160 2016-04-25                     1440           0
+46 6117666160 2016-05-03                     1440           0
+47 6290855005 2016-04-21                     1440           0
+48 6290855005 2016-04-26                     1440           0
+49 6290855005 2016-04-29                     1440           0
+50 6290855005 2016-05-10                     1440           0
+51 6775888955 2016-04-12                     1440           0
+52 6775888955 2016-04-19                     1440           0
+53 6775888955 2016-04-21                     1440           0
+54 6775888955 2016-04-23                     1440           0
+55 6775888955 2016-04-27                     1440           0
+56 6775888955 2016-04-29                     1440           0
+57 6775888955 2016-05-02                     1440           0
+58 6775888955 2016-05-04                     1440           0
+59 6775888955 2016-05-05                     1440           0
+60 7007744171 2016-05-04                     1440           0
+61 7086361926 2016-04-17                     1440           0
+62 8253242879 2016-04-30                     1440           0
+63 8583815059 2016-05-12                     1440           0
+64 8792009665 2016-04-17                     1440           0
+65 8792009665 2016-04-18                     1440           0
+66 8792009665 2016-04-19                     1440           0
+67 8792009665 2016-04-25                     1440           0
+68 8792009665 2016-05-05                     1440           0
+69 8792009665 2016-05-06                     1440           0
+70 8792009665 2016-05-07                     1440           0
+71 8792009665 2016-05-08                     1440           0
+72 8792009665 2016-05-09                     1440           0
+```
+#### Observation
+It appears that the 0 number of total steps and 1,440 minutes of sedentary time are related.
+
+#### Actions Taken
+Data entries showing 0 total steps and 1,440 minutes of sedentary time will be excluded from the analysis as they indicate inactivity, which could skew the results.
+```r
+# Removing 0 total_steps and 1,440 minutes of sedentary time
+daily_activity_merged <- daily_activity_merged[daily_activity_merged$total_steps > 0 & daily_activity_merged$sedentary_minutes < 1400,]
+```
+### 3.7.2 Accurate MET Values
+The MET values appear to be too high to be correct. According to the [Fitbase Data Dictionary](https://www.fitabase.com/media/1930/fitabasedatadictionary102320.pdf), all MET values exported from Fitbase are multiplied by 10. Therefore, to obtain accurate MET values, they will be divided by 10.
+# Getting accurate MET values
+clean_minute_METs <- mutate(clean_minute_METs, mets10 = mets/10)
+head(clean_minute_METs)
+```r
+# Updating Merged Minute DataFrames
+minute_activity_m <- merge(clean_minute_calories, clean_minute_intensities, by=c("id", "activity_minute", "activity_minute_ymdhms"), all = TRUE, no.dups = TRUE)
+minute_activity_m1 <- merge(minute_activity_m, clean_minute_METs, by=c("id", "activity_minute", "activity_minute_ymdhms"), all = TRUE, no.dups = TRUE)
+minute_activity_m2 <- merge(minute_activity_m1, clean_minute_sleep, by=c("id", "activity_minute", "activity_minute_ymdhms"), all = TRUE, no.dups = TRUE)
+minute_activity_merged <- merge(minute_activity_m2, clean_minute_steps, by=c("id", "activity_minute", "activity_minute_ymdhms"), all = TRUE, no.dups = TRUE)
+```
+```{r, results='markup'}
+A tibble: 6 × 5
+id	activity_minute	      mets  activity_minute_ymdhms   mets10
+<dbl>	<chr>	<dbl>	<dttm>	<dbl>
+1503960366	4/12/2016 12:00:00 AM	10	2016-04-12 00:00:00	1.0
+1503960366	4/12/2016 12:01:00 AM	10	2016-04-12 00:01:00	1.0
+1503960366	4/12/2016 12:02:00 AM	10	2016-04-12 00:02:00	1.0
+1503960366	4/12/2016 12:03:00 AM	10	2016-04-12 00:03:00	1.0
+1503960366	4/12/2016 12:04:00 AM	10	2016-04-12 00:04:00	1.0
+1503960366	4/12/2016 12:05:00 AM	12	2016-04-12 00:05:00	1.2
+```
+<a id="section-four"></a>
+# Section 4: Analyse and Share
+In this section, the cleaned data will be transformed and organised to identify patterns and to answer key questions relevant to our business task. The results will be visualised and interpreted to facilitate data-driven decisions.
+
+<a id="summary-statistics"></a>
+## 4.1 Summary Statistics
+Presented below are summary statistics of the cleaned data, offering a comprehensive overview and providing guidance for the upcoming analysis.
+
+***Daily DataFrames***
+```r
+# Summary of Daily DataFrames
+print("-----Daily Calories-----")
+daily_activity_merged %>% 
+  select(calories) %>% 
+  drop_na() %>% 
+  summary()
+
+print("-----Daily Intensities-----")
+daily_activity_merged %>% 
+  select(sedentary_minutes, lightly_active_minutes, fairly_active_minutes, very_active_distance) %>% 
+  drop_na() %>% 
+  summary()
+
+print("-----Daily Steps-----")
+daily_activity_merged %>% 
+  select(total_steps) %>% 
+  drop_na() %>% 
+  summary()
+
+print("-----Daily Sleep-----")
+daily_activity_merged %>% 
+  select(total_sleep_records, total_minutes_asleep, total_time_in_bed) %>% 
+  drop_na() %>% 
+  summary()
+```
+```{r, results='markup'}
+[1] "-----Daily Calories-----"
+    calories   
+ Min.   :  52  
+ 1st Qu.:1861  
+ Median :2225  
+ Mean   :2372  
+ 3rd Qu.:2844  
+ Max.   :4900  
+[1] "-----Daily Intensities-----"
+ sedentary_minutes lightly_active_minutes fairly_active_minutes
+ Min.   :   0.0    Min.   :  2.0          Min.   :  0.00       
+ 1st Qu.: 717.8    1st Qu.:152.0          1st Qu.:  0.00       
+ Median : 991.5    Median :214.0          Median :  8.00       
+ Mean   : 940.5    Mean   :216.5          Mean   : 15.21       
+ 3rd Qu.:1174.2    3rd Qu.:275.0          3rd Qu.: 22.00       
+ Max.   :1395.0    Max.   :518.0          Max.   :143.00       
+ very_active_distance
+ Min.   : 0.000      
+ 1st Qu.: 0.000      
+ Median : 0.470      
+ Mean   : 1.688      
+ 3rd Qu.: 2.340      
+ Max.   :21.920      
+[1] "-----Daily Steps-----"
+  total_steps   
+ Min.   :   17  
+ 1st Qu.: 5078  
+ Median : 8198  
+ Mean   : 8518  
+ 3rd Qu.:11178  
+ Max.   :36019  
+[1] "-----Daily Sleep-----"
+ total_sleep_records total_minutes_asleep total_time_in_bed
+ Min.   :1.00        Min.   : 58.0        Min.   : 61.0    
+ 1st Qu.:1.00        1st Qu.:361.0        1st Qu.:403.8    
+ Median :1.00        Median :432.5        Median :463.0    
+ Mean   :1.12        Mean   :419.2        Mean   :458.5    
+ 3rd Qu.:1.00        3rd Qu.:490.0        3rd Qu.:526.0    
+ Max.   :3.00        Max.   :796.0        Max.   :961.0    
+ ```
+***Hourly DataFrames***
+ ```r
+# Summary of Hourly DataFrames
+print("-----Hourly Calories-----")
+hourly_activity_merged %>% 
+  select(calories) %>% 
+  drop_na() %>% 
+  summary()
+
+print("-----Hourly Intensities-----")
+hourly_activity_merged %>% 
+  select(total_intensity, average_intensity) %>% 
+  drop_na() %>% 
+  summary()
+
+print("-----Hourly Steps-----")
+hourly_activity_merged %>% 
+  select(total_steps) %>% 
+  drop_na() %>% 
+  summary()
+ ```
+```{r, results='markup'}
+[1] "-----Hourly Calories-----"
+    calories     
+ Min.   : 42.00  
+ 1st Qu.: 63.00  
+ Median : 83.00  
+ Mean   : 97.39  
+ 3rd Qu.:108.00  
+ Max.   :948.00  
+[1] "-----Hourly Intensities-----"
+ total_intensity  average_intensity
+ Min.   :  0.00   Min.   :0.0000   
+ 1st Qu.:  0.00   1st Qu.:0.0000   
+ Median :  3.00   Median :0.0500   
+ Mean   : 12.04   Mean   :0.2006   
+ 3rd Qu.: 16.00   3rd Qu.:0.2667   
+ Max.   :180.00   Max.   :3.0000   
+[1] "-----Hourly Steps-----"
+  total_steps     
+ Min.   :    0.0  
+ 1st Qu.:    0.0  
+ Median :   40.0  
+ Mean   :  320.2  
+ 3rd Qu.:  357.0  
+ Max.   :10554.0  
+ ```
+***Minute DataFrames***
+ ```r
+# Summary of Minute DataFrames
+print("-----Minute Calories-----")
+minute_activity_merged %>% 
+  select(calories) %>% 
+  drop_na() %>% 
+  summary()
+
+print("-----Minute Intensities-----")
+minute_activity_merged %>% 
+  select(intensity, mets10, sleep_state) %>% 
+  drop_na() %>% 
+  summary()
+
+print("-----Minute Steps-----")
+minute_activity_merged %>% 
+  select(total_steps) %>% 
+  drop_na() %>% 
+  summary()
+ ```
+```{r, results='markup'}
+[1] "-----Minute Calories-----"
+    calories      
+ Min.   : 0.0000  
+ 1st Qu.: 0.9357  
+ Median : 1.2176  
+ Mean   : 1.6231  
+ 3rd Qu.: 1.4327  
+ Max.   :19.7499  
+[1] "-----Minute Intensities-----"
+   intensity           mets10       sleep_state 
+ Min.   :0.00000   Min.   :0.000   Min.   :1.0  
+ 1st Qu.:0.00000   1st Qu.:1.000   1st Qu.:1.0  
+ Median :0.00000   Median :1.000   Median :1.0  
+ Mean   :0.01395   Mean   :1.034   Mean   :1.1  
+ 3rd Qu.:0.00000   3rd Qu.:1.000   3rd Qu.:1.0  
+ Max.   :3.00000   Max.   :9.000   Max.   :3.0  
+[1] "-----Minute Steps-----"
+  total_steps     
+ Min.   :  0.000  
+ 1st Qu.:  0.000  
+ Median :  0.000  
+ Mean   :  5.336  
+ 3rd Qu.:  0.000  
+ Max.   :220.000  
+ ```
+#### Key Findings
+* On average, participants burned **2,372 calories per day**. It has been reported that a person can burn from [1,300 to 2,000+ calories a day](https://health.clevelandclinic.org/calories-burned-in-a-day/) without exercise. 
+* The average **sedentary time** is **940.5 minutes** per day, equivalent to 16 hours, which is notably high. Studies have shown that [sedentary time exceeding 10 hours daily can lead to health problems](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7700832/). High sedentary time could be caused by "[a lack of available spaces for exercise, increased occupational sedentary behaviours such as office work, and the increased penetration of television and video devices](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7700832/)." However, other studies found that the American population's average daily sedentary time is reported to be [7.7 hours](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3527832/), significantly less than observed in this study.
+* Beside sedentary activity, people are mostly **lightly active** with an average of **216.5 minutes** (almost 4 hours) per day. 
+* Average **fairly active** minutes per day is **15.21**. This, according to [World Health Organisation (WHO)](https://www.who.int/news-room/fact-sheets/detail/physical-activity), does not reach the minimum required amount of 21-43 minutes per day. 
+* Average **very active** minutes per day is **23.73**, which exceeds the [WHO](https://www.who.int/news-room/fact-sheets/detail/physical-activity) minimum required amount of 11-21 minutes per day. 
+* The average **total steps per day** is **8,518**, below the recommendeded 10,000 steps per day. 
+* Participants **sleep** on average **419.3** minutes (around 7 hours) per day, meeting the minimum recommended duration for adults.
+* The average **METs** value is **1.034**, aligning with the high sedentary time as sedentary behaviour is characterised by energy expenditures [≤ 1.5 METs](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6182813/).
+<br>
+<br>
+
+<a id="main-topics"></a>
+## 4.2 Main Topics
+Based on the summary statistics, this analysis will focus on:
+1. **Physical Activity and Intensity levels** - How physically active (sedentary, lightly active, fairly active, very active) the users were and what intensity level they used (low, moderate, or high intensity).
+2. **Device Usage Patterns** - How often and when did the participants use the device.
+
+### 4.2.1 Physical Activity and Intensity Levels
+It would be worth analysing how physically active the users were and what intensity they used throughout the duration of the study to discover any patterns that could help establish trends in smart device usage.
+
+#### **Percentage of Activity Levels**
+From the summary statistics above, it appears that there is a very high number of sedentary minutes in proportion to other activity levels. To find the exact percentage, a pie chart will be generated.
+ ```r
+# Percentage of Activity Levels
+activity_level_total <- daily_activity_merged %>%
+  summarise(
+    sedentary_minutes_total = sum(daily_activity_merged$sedentary_minutes, na.rm = TRUE),
+    fairly_active_minutes_total = sum(daily_activity_merged$fairly_active_minutes, na.rm = TRUE),
+    lightly_active_minutes_total = sum(daily_activity_merged$lightly_active_minutes, na.rm = TRUE),
+    very_active_minutes_total = sum(daily_activity_merged$very_active_minutes, na.rm = TRUE))
+
+activity_level <- c(activity_level_total$sedentary_minutes_total, activity_level_total$lightly_active_minutes_total, activity_level_total$fairly_active_minutes_total, activity_level_total$very_active_minutes_total)
+labels <- c("Sedentary", "Lightly Active", "Fairly Active", "Very Active")
+colours <- c("#cebdbf", "#e3d4cb", "#996855", "#e7a589")
+percentage <- (activity_level/sum(activity_level)*100) %>% 
+  round(2)
+labels <- paste(labels, percentage)
+options(repr.plot.width = 20, repr.plot.height = 10)
+pie(activity_level, labels=paste(labels, sep=" ", "%"), col = colours, border = "white", radius = 1, cex = 1.5)
+title(main="Percentage of Activity Levels", cex.main = 2, line = -0.10)
+ ```
+ ![image](https://github.com/ThuHangTranova/Bellabeat_Case_Study/assets/163853563/3faf2124-f31a-4901-8d70-73055df68cc0)
+#### Key Findings
+* A significant majority, **78.64%** of participants, maintained a **sedentary** lifestyle throughout the study period. This raises concerns, as prolonged physical inactivity often leads to various [health and medical conditions](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8068220/), including cardiovascular disease, diabetes, and certain cancers.
+* Only **3.25%** of participants were **fairly** (1.27%) and **very** (1.98%) **physically active** over the 31-day period. This low figure suggests that a minority of users utilised the Fitbit device primarily for tracking exercise, while the majority likely focused on monitoring daily habits.
+* It is possible that many participants are office employees or hold occupations involving predominantly sedentary activities. As per [Church et al.](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3102055/), **over 80% of occupations in the US involve prolonged sitting or require light physical intensity**. 
+<br>
+<br>
+
+#### **Correlation between Activity Levels and Calories Burnt per Day**
+To explore potential correlations between activity levels and daily caloric expenditure, a visualisation will be created using ggplot2.
+ ```r
+# Correlation between Activity Level and Calories Burnt
+p1 <- ggplot(data = daily_activity_merged, aes(x = sedentary_minutes, y = calories)) + geom_point(color = "#cebdbf") + geom_smooth(method = "lm", color = "#996855", fill = "#e7a589") + xlab("Sedentary Minutes") + ylab("Calories Burnt")
+p2 <- ggplot(data = daily_activity_merged, aes(x = lightly_active_minutes, y = calories)) + geom_point(color = "#cebdbf") + geom_smooth(method = "lm", color = "#996855", fill = "#e7a589") + xlab("Lightly Active Minutes") + ylab("Calories Burnt")
+p3 <- ggplot(data = daily_activity_merged, aes(x = fairly_active_minutes, y = calories)) + geom_point(color = "#cebdbf") + geom_smooth(method = "lm", color = "#996855", fill = "#e7a589") + xlab("Fairly Active Minutes") + ylab("Calories Burnt")
+p4 <- ggplot(data = daily_activity_merged, aes(x = very_active_minutes, y = calories)) + geom_point(color = "#cebdbf") + geom_smooth(method = "lm", color = "#996855", fill = "#e7a589") + xlab("Very Active Minutes") + ylab("Calories Burnt")
+
+options(repr.plot.width = 20, repr.plot.height = 10)
+grid.arrange(p1, p2, p3, p4,
+             nrow = 1,
+             top = "Correlation between Activity Levels and Calories Burnt per Day"
+)
+ ```
+![image](https://github.com/ThuHangTranova/Bellabeat_Case_Study/assets/163853563/252415d3-9d15-4d58-a220-b6f0b5ec7bfe)
+#### Key Findings
+* **The less active a person is, the fewer calories they will burn**.
+* The more active a person is, the more calories they will burn. 
+* The **correlation coefficient between Very Active Minutes and Burnt Calories** is **0.61**,  indicating a **moderate level of correlation**. Additionally, with a p-value close to 0, this correlation is highly statistically significant.
+* Despite fairly active and very active levels representing the smallest categories, individuals in these activity levels burn more calories compared to those in sedentary and lightly active levels.
+<br>
+<br>
+
+#### **Average Hourly Physical Intensity Throughout the Day**
+To discern peak times of physical intensity throughout the day, a bar chart will be generated.
+ ```r
+#Average Hourly Intensity throughout the Day
+hourly_activity_merged$activity_hour_hms <- format(hourly_activity_merged$activity_hour_ymdhms, format = "%H:%M:%S")
+
+hourly_activity_merged %>%
+  group_by(activity_hour_hms) %>%
+  summarise(average_hourly_intensity = mean(total_intensity)) %>% 
+  ggplot(aes(x = activity_hour_hms, y = average_hourly_intensity, fill = average_hourly_intensity)) +
+  geom_col() + 
+  scale_fill_gradient(low = "#cebdbf",
+                      high = "#9F7175") +
+  labs(x = "Time of Day", y ="Average Intensity", title ="Average Hourly Intensity throughout the Day")+
+  theme(plot.title = element_text(size = 25, hjust=0.5, face='bold'),
+        axis.text.x = element_text(angle = 90, size = 18), 
+        axis.title.x = element_text(size = 20),
+        axis.title.y = element_text(size = 20),
+        legend.title = element_text(size=20),
+        legend.text = element_text(size=18)) +
+  guides(fill = guide_legend(title="Average Hourly Intensity"))
+options(repr.plot.width = 20, repr.plot.height = 12)
+ ```
+![image](https://github.com/ThuHangTranova/Bellabeat_Case_Study/assets/163853563/6c5bbaa2-a570-4a92-8e95-5dedd0160468)
+#### Key Findings
+* The **lowest physical intensities** occur from **23:00 to 5:00**, corresponding to typical sleeping hour.
+* **Peak intensity** is observed from **17:00 to 19:00**, coinciding with the time when people usually return home from work.
+* Another **peak in intensity** is observed from **12:00 to 14:00**, indicative of lunch breaks.
+<br>
+<br>
+
+#### **Average Physical Intensity Throughout the Week**
+To determine the most active day of the week, a weekly bar chart was generated.
+ ```r
+#Average Intensity throughout the Week
+hourly_activity_merged$weekday <- factor(hourly_activity_merged$weekday, levels=c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"))
+
+hourly_activity_merged %>%
+  group_by(weekday) %>%
+  summarise(average_intensity = mean(total_intensity)) %>% 
+  ggplot(aes(x = weekday, y = average_intensity, fill = average_intensity)) +
+  geom_col() + 
+  scale_fill_gradient(low = "#cebdbf",
+                      high = "#9F7175") +
+  labs(x = "Day of Week", y ="Average Intensity", title ="Average Intensity throughout the Week")+
+  guides(fill = guide_legend(title="Average Intensity")) +
+  theme(plot.title = element_text(hjust = 0.5, vjust = 0.8, size = 20, face = 'bold')) +
+  theme(axis.text.x = element_text(angle = 90, , size = 14)) +
+  theme(axis.title.x = element_text(size = 16),
+        axis.title.y = element_text(size = 16),
+        legend.title = element_text(size=20),
+        legend.text = element_text(size=18))
+ ```
+![image](https://github.com/ThuHangTranova/Bellabeat_Case_Study/assets/163853563/b4c7bc95-3c4b-44f4-92cc-74318d36bb26)
+#### Key Findings
+* **Saturday** emerges as the **most active** day, likely due to more free time. 
+* An unexpected **peak in activity** is observed on **Tuesday**, while intensity levels on other weekdays reamin relatively consistent. 
+* **Sunday** shows the **lowest activity levels**, possibly due to individuals taking rest before the start of the workweek.
+<br>
+<br>
+
+#### **Average Hourly Physical Intensity Throughout the Week**
+Below, the average hourly intensity for each day of the week is presented, offering further insights into intensity levels over the week. 
+ ```r
+# Average Hourly Intensity throughout the Week
+hourly_activity_merged %>%
+  group_by(weekday, activity_hour_hms) %>%
+  summarise(average_hourly_intensity = mean(total_intensity)) %>% 
+  ggplot(aes(x = activity_hour_hms, y = weekday, fill = average_hourly_intensity)) +
+  theme(axis.text.x = element_text(angle=90)) +
+  scale_fill_continuous(low="white", high = "#9F7175") +
+  geom_tile(colour = "white", lwd= .5, linetype = 1) + 
+  coord_fixed() + 
+  labs(x = "Time of Day", y ="Weekday", title ="Average Hourly Intensity throughout the Week", fill = "Average Hourly Intensity") +
+  theme(plot.title = element_text(hjust = 0.5, vjust = 0.8, size = 20, face = 'bold'), panel.background = element_blank()) +
+  theme(axis.text.x = element_text(angle = 90, , size = 14)) +
+  theme(axis.title.x = element_text(size = 16),
+        axis.title.y = element_text(size = 16),
+        legend.title = element_text(size=20),
+        legend.text = element_text(size=18))
+ ```
+![image](https://github.com/ThuHangTranova/Bellabeat_Case_Study/assets/163853563/cd9cc860-0625-4ce2-8045-2f46ba8e75bd)
+#### Key Findings
+* Consistent with earlier observations, **intensity peaks from 17:00 to 19:00**, post-work hours. 
+* The midday **peak from 12:00 to 14:00** on weekdays (Monday - Friday) is less pronounced than the previous graph had shown. The peak during that period actually comes from **high activity and intensity levels on Saturday** when people have more time to workout or do other activities that require higher intensities. 
+* Users go to bed and wake up later during weekends.
+<br>
+<br>
+
+### 4.2.2 Device Usage Levels
+Daily usage of the device will be examined to understand how users use the device and how often they use it.
+
+#### **Daily Device Usage Percentage**
+To determine device usage frequency, participants will be categorized based on the number of days they used the device. The resulting percentages will be visualised using a pie chart.
+ ```r
+activity_usage <- daily_activity_merged %>% 
+  group_by(id) %>% 
+  summarize(days_used = sum(n())) %>% 
+  mutate(daily_usage_level = case_when(
+    days_used >= 1 & days_used <= 10 ~ 'Low Usage',
+    days_used > 10 & days_used <= 20 ~ 'Moderate Usage',
+    days_used > 20 ~ 'High Usage'
+  )) %>% 
+  drop_na() %>% 
+  group_by(daily_usage_level) %>% 
+  summarize(users_total = n())
+
+head(activity_usage)
+ ```
+```{r, results='markup'}
+A tibble: 3 × 2
+daily_usage_level	users_total
+<chr>	<int>
+High Usage	24
+Low Usage	1
+Moderate Usage	8
+```
+```r
+# Daily Device Usage Percentage
+slices_v2 <- c(1, 8, 24)
+labels_v2 <- c("Low Usage", "Moderate Usage", "High Usage")
+pct <- slices_v2/sum(slices_v2)*100
+pct <- round(pct, 2)
+labels_v2 <- paste(labels_v2, pct)
+labels_v2 <- paste(labels_v2, "%", sep = "")
+colours <- c("#996855", "#e7a589", "#cebdbf")
+options(repr.plot.width = 20, repr.plot.height = 13)
+pie(slices_v2, labels = labels_v2,
+    main="Daily Usage Levels",
+    col = colours, 
+    border = "white", 
+    cex.main = 2,
+    cex = 1.5,
+    radius = 1)
+legend('topleft', c("Low Usage: 1 - 10 days","Moderate Usage: 11 - 20 days","High Usage: 21 - 31 days"), cex = 1.3, fill = colours)
+```
+![image](https://github.com/ThuHangTranova/Bellabeat_Case_Study/assets/163853563/09b01e22-4627-4126-981a-2207ef338e55)
+#### Key Findings
+* The majority of participants (**72.73%**) used their device **very frequently** (21 - 31 days).
+* **24.24%** of participants used the device **frequently** (11 -20 days).
+* Only **3.03%** of participants had **low device usage** (1 - 20 days).
+<br>
+<br>
+
+#### **Device Worn in a Day Percentage**
+The pie chart below illustrates the percentage with which the device was worn all day.
+```r
+daily_activity_merged$device_worn <- daily_activity_merged$sedentary_minutes + daily_activity_merged$fairly_active_minutes + daily_activity_merged$lightly_active_minutes + daily_activity_merged$very_active_minutes
+daily_activity_merged$device_worn <- daily_activity_merged$device_worn/60
+daily_activity_merged$device_worn_24 <- daily_activity_merged$device_worn == 24
+device_worn <- count(daily_activity_merged, device_worn_24) %>% 
+  drop_na()
+
+glimpse(device_worn)
+```
+```{r, results='markup'}
+Rows: 2
+Columns: 2
+$ device_worn_24 <lgl> FALSE, TRUE
+$ n              <int> 458, 378
+```
+```r
+slices_v3 <- c(378, 458)
+labels_v3 <- c("Worn all day", "Not worn all day")
+pct_v1 <- slices_v3/sum(slices_v3)*100
+pct_v1 <- round(pct_v1, 2)
+labels_v3 <- paste(labels_v3, pct_v1)
+labels_v3 <- paste(labels_v3, "%", sep = "")
+colours <- c("#996855", "#cebdbf")
+options(repr.plot.width = 20, repr.plot.height = 13)
+pie(slices_v3, labels = labels_v3,
+    main="Percentage of the Device Being Worn the Whole Day", cex = 1.5, cex.main = 2, col = colours, border = "white", radius = 1)
+```
+![image](https://github.com/ThuHangTranova/Bellabeat_Case_Study/assets/163853563/e5038d8a-7352-4e1c-9951-0bbd4b55d202)
+#### Key Findings
+* **54.78%** of participants **did not wear the device for the entire day**. 
+<br>
+<br>
+
+#### **The Number of Hours the Device was Worn Throughout the Week**
+Given that over 50% of participants did not wear the device for the entire 24 hours per day, it is pertinent to examine the number of hours the device was worn per day.
+```r
+# How many Hours was the Device Worn per Day
+device_worn_24_7 <- daily_activity_merged[c("id", "weekday", "device_worn", "activity_date_ymd")]
+device_worn_24_7$weekday <- factor(device_worn_24_7$weekday, levels = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"))
+
+device_worn_24_7 %>% 
+  drop_na() %>% 
+  ggplot(aes(y = device_worn, x = weekday, group = 1)) + 
+  geom_point(color = "#cebdbf", size = 1) +
+  geom_smooth(method = "loess", span = 0.2, color = "#996855", fill = "#e7a589") +
+  coord_cartesian(ylim = c(0, 24)) +
+  ggtitle("The Number of Hours the Device was Worn \nthroughout the Week")+
+  ylab("The Number of Hours Worn within a Day") +
+  xlab("Day of Week") +
+  theme(plot.title = element_text(size = 20, hjust = 0.5, face = 'bold'),
+        axis.text.x = element_text(angle = 90, size = 14), 
+        axis.title.x = element_text(size = 16),
+        axis.title.y = element_text(size = 16)
+        )
+options(repr.plot.width = 25, repr.plot.height = 12)
+```
+![image](https://github.com/ThuHangTranova/Bellabeat_Case_Study/assets/163853563/b9c75fbe-4e83-407b-b556-36b0c82a7725)
+It appears that many participants wore the tracker for less than 20 hours per day. To determine the exact percentage of how many times the device was worn for less than 20 hours per day, the `count()` function will be used and a pie chart will be created.
+```r
+# Count of the device being worn < 20 hours
+worn_less_20 <- daily_activity_merged %>% 
+  count(device_worn < 20) %>% 
+  drop_na()
+
+head(worn_less_20)
+```
+```{r, results='markup'}
+A data.frame: 2 × 2
+device_worn < 20	n
+<lgl>	<int>
+1	FALSE	433
+2	TRUE	403
+```
+```r
+# Percentage of the device being worn < 20 hours
+slices_v3 <- c(403, 433)
+labels_v3 <- c("Device worn < 20 hours", "Device worn > 20 hours")
+pct_v1 <- slices_v3/sum(slices_v3)*100
+pct_v1 <- round(pct_v1, 2)
+labels_v3 <- paste(labels_v3, pct_v1)
+labels_v3 <- paste(labels_v3, "%", sep = "")
+colours <- c("#996855", "#cebdbf")
+options(repr.plot.width = 20, repr.plot.height = 13)
+pie(slices_v3, labels = labels_v3,
+    main = "Percentage of the Device Being Worn \nLess than 20 Hours per Day", col = colours, border = "white", radius = 1,
+   cex.main = 2, cex = 1.5)
+```
+![image](https://github.com/ThuHangTranova/Bellabeat_Case_Study/assets/163853563/fc9c2bd7-42ed-4bc9-b669-079c7b9a6cfe)
+#### Key Findings
+* A significant portion of participants did not wear the device for the entire day during the study.
+* **48.21%** of participants **wore the device for less than 20 hours per day**. 
+<br>
+<br>
+
+#### **Activity Device Usage vs Sleep Device Usage**
+Given that almost half of the participants wore the device for less than 20 hours per day, it is plausible that these unaccounted hours correspond to sleep periods when users may remove the device for comfort. To investigate this hypothesis, two bar graphs will be plotted comparing activity usage levels (users tracking their daily activity) and sleep usage levels (users tracking their sleep).
+```r
+# Activity usage per participant
+activity_usage_v2 <- clean_daily_calories %>% 
+  group_by(id) %>% 
+  count() %>% 
+  arrange(n) %>%
+  mutate(activity_percentage = (n/31)*100)
+head(activity_usage_v2)
+
+p5 <- ggplot(activity_usage_v2, aes(x = reorder(id, n), y = activity_percentage)) +
+  geom_col(fill = "#cebdbf")  + 
+  labs(title="Activity Device Usage", x = "Particpant #", y = "Percentage of Logged Activity", caption = "33 participants") +
+  theme(plot.title = element_text(hjust = 0.5, vjust = 0.8, size = 20, face = 'bold')) +
+  theme(axis.text.x = element_text(angle = 90, size = 14)) +
+  theme(axis.title.x = element_text(size = 16)) +
+  theme(axis.title.y = element_text(size = 16)) + 
+  theme(plot.caption = element_text(size = 13))
+
+# Sleep usage per participant
+sleep_usage <- clean_daily_sleep %>% 
+  group_by(id) %>% 
+  count() %>% 
+  arrange(n) %>%
+  mutate(sleep_percentage = (n/31)*100) #% of nights users monitored sleep
+head(sleep_usage)
+
+p6 <- ggplot(sleep_usage, aes(x= reorder(id, n), y = sleep_percentage)) +
+  geom_col(fill = "#cebdbf") + 
+  labs(title="Sleep Device Usage", x= "Particpant #", y="Percentage of Logged Sleep", caption = "24 participants") +
+  theme(plot.title = element_text(hjust = 0.5, vjust = 0.8, size = 20, face = 'bold')) +
+  theme(axis.text.x = element_text(angle = 90, size = 14)) +
+  theme(axis.title.x = element_text(size = 16)) +
+  theme(axis.title.y = element_text(size = 16)) +
+  theme(plot.caption = element_text(size = 13))
+
+options(repr.plot.width = 20, repr.plot.height = 12)
+grid.arrange(p5, p6,
+             ncol = 1
+)
+```
+```{r, results='markup'}
+A grouped_df: 6 × 3
+id	n	activity_percentage
+<dbl>	<int>	<dbl>
+4057192912	4	12.90323
+2347167796	18	58.06452
+8253242879	19	61.29032
+3372868164	20	64.51613
+6775888955	26	83.87097
+7007744171	26	83.87097
+```
+```{r, results='markup'}
+A grouped_df: 6 × 3
+id	n	sleep_percentage
+<dbl>	<int>	<dbl>
+2320127002	1	3.225806
+7007744171	2	6.451613
+1844505072	3	9.677419
+6775888955	3	9.677419
+8053475328	3	9.677419
+1644430081	4	12.903226
+```
+![image](https://github.com/ThuHangTranova/Bellabeat_Case_Study/assets/163853563/a102e09f-f76c-4710-98ad-96c2c3db77b5)
+#### Key Findings
+* **33 participants** tracked their **daily activity**, whereas **24 participants** tracked their **sleep**. This indicates that all participants tracked their daily activity, but 9 of them did not track their sleep.
+* Over **21 participants** wore the device throughout the whole day to track their daily activity, but only **3** wore it to bed consistently during the study. This suggests that many **users remove their Fitbit tracker before sleeping**. 
+<br>
+<br>
+
+<a id="section-five"></a>
+# Section 5: Act
+In this section, recommendations will be provided based on the findings. It will be divided into sub-sections following the guiding questions that were provided at the beginning of this project:
+
+1. What are the current trends in smart device usage?
+2. How do these trends relate to Bellabeat's target customers?
+3. How can these trends influence Bellabeat's marketing strategy?
+
+<a id="smart-device-usage-trends"></a>
+## 5.1 Smart Device Usage Trends
+### Activity and Intensity Levels
+* The average **total steps per day** (**8,518**), fall below the recommended [10,000](https://ijbnpa.biomedcentral.com/articles/10.1186/1479-5868-8-79) steps per day.
+* **Very high sedentary time** (nearly 16 hours) can lead to multiple health issues. It was suggested that many users of the Fitbit device are professionals who do jobs which mostly involve sedentary behaviour.
+* The more active a person is, the more calories they burn. **The less active a person** is and **the longer they stay in a sedentary position, the fewer calories they burn**. 
+* Only **3.25%** of participants were **fairly and very physically active** with **an average of 19.47 minutes per day**. This low figure suggests that not many users might be using the Fitbit device to track exercise; rather, they might be **tracking daily habits**. 
+* During the weekday, **the highest intensity** is predominately from **17:00 to 19:00** when people usually go home from work. 
+* During the weekend, **the peak in intensity and high activity** is on **Saturday afternoon** when people have more time to work out or do other activities that require higher intensities. However, on **Sunday, users are less active** as they tend to treat Sunday as **a rest day**. 
+
+### Device Usage Levels
+* Most participants (**72.73%**) used the device **very frequently** for 21 - 31 days.
+* However, **54.78%** of the participants **did not wear the device** for the entire day. 
+* **48.21%** of the participants **wore the device less than 20 hours per day**. 
+* **The majority tracked their daily activity** but **did not monitor their sleep**.
+<br>
+<br>
+
+<a id="applying-the-trends-to-bellabeat-customers"></a>
+## 5.2 Applying the Trends to Bellabeat Customers
+### Activity and Intensity Levels
+1. **Working professionals**: Results suggest that Fitbit users are mostly working professionals as the highest intensity during the weekday is around 18:00, correlating to the time when people usually finish their work and go home. → Many Bellabeat customers are also working professionals.
+2. **Mental health problems and eating disorders**: There is a very high sedentary time, and the average number of total steps is less than the amount recommended by health experts. This corresponds to the information above suggesting that most users were **office workers** or **working professionals** who simply **did not find much time to workout** due to their busy schedule. It has been proposed that excessive **[sedentary time is associated with mental health issues](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6082791/)** including depression, anxiety, and self-esteem. → Since the target market is female working professionals, this information is especially important as **women are [three times more](https://www.mentalhealth.org.uk/explore-mental-health/statistics/men-women-statistics) likely than men to experience common mental health problems and eating disorders**. 
+
+### Device Usage Levels
+1. **Quality of Sleep**: Many Fitbit users voiced out that it is [uncomfortable to wear the tracker to bed](https://community.fitbit.com/t5/Sleep-Well/Who-else-doesn-t-wear-Fitbit-to-bed/td-p/1738710) and that they would rather save some battery or recharge the device during the bedtime. Some Fitbit users also mentioned that they [do not find the sleep data useful](https://community.fitbit.com/t5/Sleep-Well/Who-else-doesn-t-wear-Fitbit-to-bed/td-p/1738710). These might be some of the reasons why not all users wore the tracker to bed and monitor their sleep. However, as per [Eatough](https://www.betterup.com/blog/sleep-trackers#:~:text=Sleep%20trackers%20can%20detect%20when,the%20time%20you%20are%20inactive): "The amount and quality of sleep ... have a lasting impact on you when you’re awake. It affects your mental fitness, physical well-being, and even your risk of developing lifestyle diseases." → This is essential for the Bellabeat customers who might not be getting enough sleep which can not only impact their job performance but their wellness overall.
+<br>
+<br>
+
+<a id="bellebeat-marketing-strategy-recs"></a>
+## 5.3 Bellabeat Marketing Strategy Recommendations
+Recommendations were made based on the data analysis results that would benefit and target the female professionals. The recommendations are aimed to improve Bellabeat's Ivy health tracker.
+<br>
+<br>
+
+### 5.3.1 Target Market
+The target market for this marketing strategy is **female working professionals** who aim to support their mental health while staying fit. Their focus is not necessarily to optimise their fitness and workout performance, rather to **prioritise their mental and reproductive health by staying physically active and healthy amid their busy schedule.**
+<br>
+<br>
+
+### 5.3.2 Recommendations for Product Improvement
+#### **Personalised Workout Schedule for Female Working Professionals**
+Many Bellabeat customers are working professionals who might often be too busy to engage in regular exercise. [Studies](https://www.today.com/health/diet-fitness/exercise-only-weekends-rcna39325) propose that people with fewer opportunities for daily workouts during their work week can either workout for longer periods during the weekends and/or work for shorter periods during the week to maintain the recommended 75 - 150 minutes of moderate to vigorous activity a week. Bellabeat can provide **personalised workout schedules that would not only reach the recommended amount of activity but also accommodate the user's busy schedule.**
+<br>
+<br>
+
+#### **Gentle Reminders and Inactivity Alerts**
+To reduce the amount of sedentary time, Bellabeat added the inactivity alert feature which sends out alerts to the users when they have been inactive for too long, to remind them to get up and move around. This feature, however, is only available to Leaf and Time but not the Ivy tracker. Since Ivy focuses on wellness, vibrations and reminders might be too distracting which can induce anxiety. Instead, Ivy allows users to set their own daily goals for steps and activity to motivate them to make better choices for their health. However, knowing that the target market are female professionals who might be involved in daily prolonged sitting, **gentle inactivity alerts should still be an option as high sedentary behaviour has negative health effects.**
+<br>
+<br>
+
+### 5.3.3 Recommendations for Marketing Strategies
+Bellabeat offers a personalised **holistic wellness approach to health** compared to companies such as Fitbit that are more fitness and performance-oriented. This gives Bellabeat a competitive edge as this holistic approach might be valued by female professionals who, according to [Priory (2023)](https://www.priorygroup.com/blog/why-are-stress-levels-among-women-50-higher-than-men), **are more likely to experience work-related stress**. 
+
+Based on the analysis of this project, Bellabeat's marketing strategy should focus on the following aspects of the Ivy wellness tracking device:
+
+#### **Detailed Sleep Analysis**
+Bellabeat Ivy provides a detailed sleep analysis with a score that is going to help guide users to make smarter, healthier decisions that would work with their body and mind. The marketing team should **stress the importance of sleep** as it is [vital to our health](https://www.betterup.com/blog/sleep-trackers#:~:text=Sleep%20trackers%20can%20detect%20when,the%20time%20you%20are%20inactive) and getting enough sleep keeps the body and mind in optimal condition and ready for the day. Since the working environment can be sometimes stressful and challenging, having a regular sleep routine and good night sleep is very important as it "[restores the body, improves concentration, regulates mood, and sharpens judgement and decision-making](https://www.sleepscore.com/blog/how-rest-your-way-less-stress/#:~:text=How%20Can%20Sleep%20Reduce%20Stress,you're%20well%2Drested)." Having **adequate sleep was proven to drastically reduce feelings of anxiety and improve the ability to process stress. Tracking sleep can help with maintaining a regular sleep schedule or diagnose and rectify sleep issues**. 
+<br>
+<br>
+
+#### **Comfortable and Lightweight**
+Despite the importance of sleep tracking, some Fitbit users took off their tracking device during the night as they found it uncomfortable to sleep with. The marketing team should emphasise that **Bellabeat Ivy is incredibly lightweight making it very comfortable to wear anywhere and anytime including to bed**. 
+<br>
+<br>
+
+#### **Strong Battery Life**
+Bellabeat Ivy also boasts a long battery life that can last up to 8 days. Therefore, users would have to **worry less about recharging the device overnight**.
+<br>
+<br>
+
+<a id="selection-conclusion"></a>
+# Conclusion
+The purpose of this case study was to identify potential growth opportunities for Bellabeat, a wellness company, and improve their marketing strategy by analysing smart device usage among Fitbit consumers. Based on the analysis conducted, it can be concluded that the majority of fitness smart device users are working professionals who lack the recommended active minutes as they are often too busy to engage in regular exercise. Therefore, it is recommended to tailor Bellabeat's marketing strategies and products to working professionals by providing personalised workout schedules as well as implementing gentle inactivity alerts. Moreover, it was suggested to emphasise the importance of sleep because of its numerous benefits. These are the recommendations and conclusions drawn from the analysis of the Fitbit data. However, further analysis into other smart device companies such as the Apple Watch or Garmin is advised to support these results and provide additional insight into Bellabeat's strategies.
