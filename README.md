@@ -12,7 +12,7 @@
     </p>
 
 ## Overview
-This case study is part of the Google Data Analytics Professional Certificate. It focuses on Bellabeat, a wellness brand for women, and provides analysis on smart device usage to inform and refine their marketing strategy. To achieve this, the data analysis process was followed: ask, prepare, process, analyse, share, and act. RStudio, a programming tool built for R, was employed to clean, analyse and visualise the data.
+This case study is part of the [Google Data Analytics Professional Certificate](https://www.coursera.org/google-certificates/data-analytics-certificate?network=g&utm_source=gg&adposition=&creativeid=658353603310&matchtype=&adgroupid=148629173669&gclid=CjwKCAjw_aemBhBLEiwAT98FMmeL05UFV56kyUe4XA3sbz6KqHoqojgSqRZladBghJbgy7WQTvWpvRoCiXsQAvD_BwE&keyword=&hide_mobile_promo=&utm_campaign=B2C_EMEA_google-data-analytics_google_FTCOF_google-certificates_country-GB&campaignid=20120837007&devicemodel=&utm_medium=sem&device=c&redirected_from_description_page=true). It focuses on Bellabeat, a wellness brand for women, and provides analysis on smart device usage to inform and refine their marketing strategy. To achieve this, the data analysis process was followed: ask, prepare, process, analyse, share, and act. RStudio, a programming tool built for R, was employed to clean, analyse and visualise the data.
 
 ## Content Summary
 * [The Company: Bellabeat](https://github.com/ThuHangTranova/Bellabeat_Case_Study/blob/main/Bellabeat-Case-Study-Full-Version.md#the-company-bellabeat)
