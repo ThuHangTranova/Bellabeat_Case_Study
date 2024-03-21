@@ -9,7 +9,7 @@
 <p align="center">
 <img src="https://techcrunch.com/wp-content/uploads/2021/11/5-Bellabeat-Ivy-Blush-Rose-Gold-Fitness-Assistant-1.webp?w=1390&crop=1" width="700"/>
     </p>
-<p align="center"> <em>Bellabeat Ivy (2022) Available at: https://time.com/collection/best-inventions-2022/6228846/bellabeat-ivy/</em>
+<p align="center"> <em>Bellabeat Ivy (2022) Available at: (https://techcrunch.com/2021/11/12/bellabeat-ivy-bracelet-health-tracker-review/)</em>
     </p>
 
 # Overview
