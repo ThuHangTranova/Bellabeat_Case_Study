@@ -1,16 +1,18 @@
 # **Bellabeat Case Stuty**
 
-Thu Hang Tranova
-<br>
-<br>
-
-This case study is part of the [Google Data Analytics Professional Certificate](https://www.coursera.org/google-certificates/data-analytics-certificate?network=g&utm_source=gg&adposition=&creativeid=658353603310&matchtype=&adgroupid=148629173669&gclid=CjwKCAjw_aemBhBLEiwAT98FMmeL05UFV56kyUe4XA3sbz6KqHoqojgSqRZladBghJbgy7WQTvWpvRoCiXsQAvD_BwE&keyword=&hide_mobile_promo=&utm_campaign=B2C_EMEA_google-data-analytics_google_FTCOF_google-certificates_country-GB&campaignid=20120837007&devicemodel=&utm_medium=sem&device=c&redirected_from_description_page=true). It will focus on Bellabeat, a wellness brand for women, and provide analysis on smart device usage to inform and refine its marketing strategy. To achieve this the data analysis process will be followed: **ask**, **prepare**, **process**, **analyse**, **share**, and **act**. RStudio, a programming tool built for R, will be employed to clean, analyse and visualise the data. 
+**Author:** Thu Hang Tranova
+<br/>
+**Date:** June 23, 2023
+<br/>
+**Updated:** March 21, 2024
 
 <p align="center">
 <img src="https://techcrunch.com/wp-content/uploads/2021/11/5-Bellabeat-Ivy-Blush-Rose-Gold-Fitness-Assistant-1.webp?w=1390&crop=1" width="700"/>
     </p>
 <p align="center"> <em>Bellabeat Ivy (2022) Available at: https://time.com/collection/best-inventions-2022/6228846/bellabeat-ivy/</em>
     </p>
+
+This case study is part of the [Google Data Analytics Professional Certificate](https://www.coursera.org/google-certificates/data-analytics-certificate?network=g&utm_source=gg&adposition=&creativeid=658353603310&matchtype=&adgroupid=148629173669&gclid=CjwKCAjw_aemBhBLEiwAT98FMmeL05UFV56kyUe4XA3sbz6KqHoqojgSqRZladBghJbgy7WQTvWpvRoCiXsQAvD_BwE&keyword=&hide_mobile_promo=&utm_campaign=B2C_EMEA_google-data-analytics_google_FTCOF_google-certificates_country-GB&campaignid=20120837007&devicemodel=&utm_medium=sem&device=c&redirected_from_description_page=true). It will focus on Bellabeat, a wellness brand for women, and provide analysis on smart device usage to inform and refine its marketing strategy. To achieve this the data analysis process will be followed: **ask**, **prepare**, **process**, **analyse**, **share**, and **act**. RStudio, a programming tool built for R, will be employed to clean, analyse and visualise the data. 
 
 ## Table of Contents
 * [The Company: Bellabeat](#company)
