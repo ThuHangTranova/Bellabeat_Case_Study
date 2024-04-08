@@ -32,6 +32,6 @@ For access to the [Bellabeat Case Study](https://github.com/ThuHangTranova/Bella
 ## Other Mediums
 The case study is also accessible via:
 <br/>
-[Website: Bellabeat Case Study](https://thuhangtranova.wixsite.com/thuhang-tranova/post/bellabeat-case-study)
+[Portfolio: Bellabeat Case Study](https://thuhangtranova.github.io)
 <br/>
 [Kaggle: Bellabeat Case Study](https://www.kaggle.com/code/thuhangtranova/bellabeat-case-study)
